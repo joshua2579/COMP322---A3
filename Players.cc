@@ -10,18 +10,48 @@ public:
   }
 };
 
-class OtherPlayer : public RPSPlayer {
+class BeatOpponentsPreviousMovePlayer : public RPSPlayer {
+private:
+ RockPaperScissorChoice opponentsPreviousMove;
 public:
-  //always choose rock
+  //Chooses the move that beats the opponent's previous move
   RockPaperScissorChoice chooseMove() {
-    return ROCK;
+    opponentsPreviousMove = myOpponentMoves.back();
+    switch (opponentsPreviousMove) {
+      case ROCK:
+      return PAPER;
+      case PAPER:
+      return SCISSOR;
+      case SCISSOR:
+      return ROCK;
+    }
   }
 };
 
-class YetOtherPlayer : public RPSPlayer {
+class SmartPlayer : public RPSPlayer {
+private:
+  int rocks, papers, scissors;
+  vector<RockPaperScissorChoice>::iterator it;
 public:
-  //always choose rock
+  //Iterates through all the opponents' previous moves and beats the most frequent one.
   RockPaperScissorChoice chooseMove() {
-    return ROCK;
+    rocks = papers = scissors = 0;
+    for(it = myOpponentMoves.begin(); it < myOpponentMoves.end(); it++) {
+      switch (*it) {
+        case ROCK:
+        rocks++;
+        case PAPER:
+        papers++;
+        case SCISSOR:
+        scissors++;
+      }
+      if ((rocks >= papers) && (rocks >= scissors)) {
+        return PAPER;
+      } else if ((papers >= rocks) && (papers >= scissors)) {
+        return SCISSOR;
+      } else { //scissor is the most frequent move
+        return ROCK;
+      }
+    }
   }
 };
