@@ -1,5 +1,6 @@
 #include <vector>
 using namespace std;
+#include <iostream>
 
 //enum to represent a move choice. This allows headers in the below functions to
 //take as input RockPaperScissorChoice instead of an int, which
@@ -8,13 +9,25 @@ enum RockPaperScissorChoice { ROCK, PAPER, SCISSOR };
 
 //enum to represent result from a round
 enum Result { PLAYERONEWIN, PLAYERTWOWIN, TIE};
+enum PlayerType { SCISSORPLAYER, ROCKPLAYER, PAPERPLAYER};
 
 class RPSPlayer {
 protected:
   vector<RockPaperScissorChoice> myMoves;
   vector<RockPaperScissorChoice> myOpponentMoves;
+  int playerNumber;
+  PlayerType playerType;
 
 public:
+
+  int GetNumber() {
+  	return playerNumber;
+  }
+
+  PlayerType GetName() {
+  	return playerType;
+  }
+
   //virtual function that should be overridden in inheriting classes
   virtual RockPaperScissorChoice chooseMove() = 0;
 
