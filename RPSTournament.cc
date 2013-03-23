@@ -7,7 +7,7 @@ int main() {
 	//Initialization of all players
 	vector<RPSPlayer*> players;
 	int i, r;
-	for(i = 1; i<=17; i++) {
+	for(i = 1; i<=128; i++) {
 		r = rand();
 		r = r%3;
 		switch(r) {
@@ -57,22 +57,22 @@ int main() {
 					if (result == PLAYERONEWIN) {
 						if (TEST) cout << "PlayerOneWin: " << (*it)->GetNumber() << " V.S " << (*(it+1))->GetNumber() << endl;
 						(*it)->addRound(playerOneMove, playerTwoMove);
+						delete (*(it+1)); //delete the player from memory
 						players.erase(it+1); //remove the player from the list
-						//delete ((*it)+1); //delete the player from memory
 						it = players.begin();
 					} else if (result == PLAYERTWOWIN) {
 						if (TEST) cout << "PlayerTwoWin: " << (*it)->GetNumber() << " V.S " << (*(it+1))->GetNumber() << endl;
 						(*(it+1))->addRound(playerTwoMove, playerOneMove);
+						delete (*it); //delete the player from memory
 						players.erase(it); //remove the player from the list
-						//delete (*it); //delete the player from memory
 						it = players.begin();
 					} else if (result == TIE) { //There's still a tie even after three tries
-					if (TEST && (repeat != 0)) cout << "Tied 3 times: " << (*it)->GetNumber() << " V.S " << (*(it+1))->GetNumber() << endl;
+					if (TEST && (repeat != 0)) cout << "Tied 3 times: " << (*it)->GetNumber() << " V.S " << (*(it+1))->GetNumber() << endl;	
+						delete (*it); //delete the player from memory
 						players.erase(it); //remove the player from the list
-						//delete (*it); //delete the player from memory
+						delete ((*it)); //delete the player from memory
 						players.erase(it); //remove the player from the list
 						it = players.begin();
-						//delete ((*it)+1); //delete the player from memory
 						if (players.size() == 0) {
 							cout << "The last two players tied three times. They were both eliminated." << endl;
 							break;
